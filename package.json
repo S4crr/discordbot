@@ -1,0 +1,26 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "A Discord bot for a Discord server",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "Discord",
+    "bot",
+    "stadia",
+    "destiny",
+    "js",
+    "node",
+    "npm"
+  ],
+  "author": "Quentin Eppe",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

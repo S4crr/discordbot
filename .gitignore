@@ -1,0 +1,4 @@
+node_modules/
+
+# The token of the Discord bot
+token.js

@@ -5,7 +5,8 @@ const token = require('./token');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'))
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
 
@@ -35,6 +36,8 @@ client.on('guildMemberRemove', member => {
 });
 
 client.on('message', message => {
+    const messageContent = message.content.toLowerCase();
+
     const hotWords = [
         {
             name: 'donjon',
@@ -76,7 +79,7 @@ client.on('message', message => {
 
     for (var hotWord of hotWords) {
         if (!message.author.bot) {
-            if (message.content.toLowerCase().includes(hotWord.name)) {
+            if (messageContent.includes(hotWord.name)) {
                 if (hotWord.id != message.channel.id) {
                     message.reply(`essaye d'envoyer ce message dans le salon où on parle de ${hotWord.name} !`);
                 }
@@ -84,15 +87,21 @@ client.on('message', message => {
         }
     }
 
+    if (message.mentions.has(client.user)) {
+        client.commands.get('hello').execute(message);
+    }
+
     const prefix = '!';
 
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (!messageContent.startsWith(prefix) || message.author.bot) return;
 
-    const args = message.content.slice(prefix.length).split(/ +/);
-    const command = args.shift().toLowerCase();
+    const args = messageContent.slice(prefix.length).split(/ +/);
+    const command = args.shift();
 
     if (command === 'ping') {
         client.commands.get('ping').execute(message, args);
+    } else if (command === 'anecdote') {
+        client.commands.get('anecdote').execute(message, args);
     }
 });
 
